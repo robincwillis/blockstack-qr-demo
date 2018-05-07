@@ -1,5 +1,3 @@
-var dotenv = require('dotenv');
-dotenv.load();
 
 var path = require('path');
 var express = require('express');
