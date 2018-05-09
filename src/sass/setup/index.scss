@@ -2,11 +2,27 @@ body {
 	font-family : sans-serif;
 }
 
+* {
+	box-sizing: border-box;
+}
+
 .container {
 	width : 480px;
 	height : 480px;
 	background : rgba(150,150,150,0.5);
 	margin : 8px 0;
+	position : relative;
+}
+
+.reader-mask {
+	position : absolute;
+	top : 0;
+	left : 0;
+	width : 100%;
+	height : 100%;
+	border : 50px solid rgba(0, 0, 0, 0.6);
+	box-shadow: rgba(255, 255, 255, 1) 0px 0px 0px 2px inset;
+	z-index : 1;
 }
 
 .qr-container {

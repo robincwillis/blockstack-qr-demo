@@ -29,7 +29,6 @@ const writeCodesToDisk = (value) => {
     fs.createWriteStream(svgPath)
 	);
 
-
 	var png = qr.image(value, {
 		type: 'png',
 		margin : 2

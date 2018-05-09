@@ -14,7 +14,7 @@ class App extends Component {
 		result: 'No result',
 		inputMode : false,
 		error : '',
-		legacyMode : true
+		legacyMode : false
 	}
 
 	handleScan = (data) => {
@@ -42,7 +42,7 @@ class App extends Component {
 		const options = {
 			method : 'POST',
 			body : JSON.stringify({inputCode}),
-			headers: new Headers({ "Content-Type": "application/json" })
+			headers: { "Content-Type": "application/json" }
 		}
 
 		fetch('/api/branded-qr-code', options).then( (res) => {
@@ -60,7 +60,7 @@ class App extends Component {
 		const options = {
 			method : 'POST',
 			body : JSON.stringify({inputCode}),
-			headers: new Headers({ "Content-Type": "application/json" })
+			headers: { "Content-Type": "application/json" }
 		}
 
 		fetch('/api/qr-code', options).then( (res) => {
@@ -137,6 +137,7 @@ class App extends Component {
 				) : (
 					<div>
 						<div className="container">
+							<div className="reader-mask" />
 							<QrReader
 								className="myQrReader"
 								ref={(qrReader) => {this.qrReader = qrReader}}
