@@ -1,8 +1,43 @@
 
-QR Reader for Blockstack
+Small Proof of concept for Generating and reading QR Codes through web browser for BlockStack
 
-QR Generator for Blockstack
+# QR Reader for Blockstack
 
+# QR Generator for Blockstack
+
+# Branded QR Generator for Blockstack
+
+Frontend and Backend Apps are decoupled so you can choose to use both or just one individually.
+
+
+## Requirements
+
+Node ^6.7
+NPM  ^4.6
+
+## Development
+
+1. Install Dependancies
+
+```
+npm install
+```
+
+2. Run Local Development Server (serves frontend)
+
+```
+npm start
+```
+
+3. Run QR Code Generator Server (servers backend)
+
+```
+node gen.js
+```
+
+# Notes
+
+If not running on Localhost Camera will only work on https enabled sites.
 
 on Safari
 

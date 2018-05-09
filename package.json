@@ -1,7 +1,7 @@
 {
-  "name": "blockstack",
+  "name": "blockstack-qr-demo",
   "version": "1.0.0",
-  "description": "",
+  "description": "Demo qr reader for blockstack",
   "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=development node index.js",
@@ -9,7 +9,7 @@
     "postinstall": "webpack --mode=production --config=webpack.config.js",
     "test": "eslint ./src/js/"
   },
-  "author": "",
+  "author": "@robincwillis",
   "license": "ISC",
   "devDependencies": {
     "autoprefixer": "^8.3.0",
@@ -17,6 +17,7 @@
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.3",
     "babel-loader": "^7.1.4",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-es2017": "^6.24.1",
     "babel-preset-react": "^6.24.1",
@@ -45,6 +46,7 @@
   },
   "dependencies": {
     "body-parser": "^1.18.2",
+    "branded-qr-code": "^1.3.0",
     "express": "^4.16.3",
     "qr-image": "^3.2.0",
     "react": "^16.3.2",

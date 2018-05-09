@@ -7,14 +7,14 @@ import InlineSVG from 'svg-inline-react';
 class App extends Component {
 
 	state = {
-		inputCode : 'waelfjwaliejfiawlejfwfwlijfiw3jfl',
-		outoutCode : '',
-		svg : '',
+		inputCode : 'a591a6d40bf420404a011733cfb7b190d62c65bf0bcda32b57b277d9ad9f146e',
+		svg : null,
+		img : null,
 		delay: 300,
 		result: 'No result',
 		inputMode : false,
 		error : '',
-		legacyMode : false
+		legacyMode : true
 	}
 
 	handleScan = (data) => {
@@ -35,32 +35,53 @@ class App extends Component {
 		});
 	}
 
-	generateCode = (event) => {
+
+	generateBrandedCode = (event) => {
 		const {inputCode} = this.state;
+
 		const options = {
 			method : 'POST',
 			body : JSON.stringify({inputCode}),
 			headers: new Headers({ "Content-Type": "application/json" })
-			//body : this.state.inputCode
 		}
 
-		fetch('http://localhost:5000/api/qr-code', options).then( (res) => {
+		fetch('/api/branded-qr-code', options).then( (res) => {
+			return res.text();
+		}).then( (img) => {
+			this.setState({img});
+		})
+		.catch( (err) => {console.error(err)});
+
+	}
+
+	generateCode = (event) => {
+		const {inputCode} = this.state;
+
+		const options = {
+			method : 'POST',
+			body : JSON.stringify({inputCode}),
+			headers: new Headers({ "Content-Type": "application/json" })
+		}
+
+		fetch('/api/qr-code', options).then( (res) => {
 			return res.text();
 		}).then( (svg) => {
 			this.setState({svg});
 		})
-		.catch(console.error.bind(console));
+		.catch( (err) => {console.error(err)});
 	}
 
 
-	toggleMode = () => {
-		const mode = this.state.inputMode;
+	toggleInputMode = () => {
 		this.setState({
-			inputMode : !mode
+			inputMode : !this.state.inputMode
 		});
 	}
 
-	uploadCode = (event) => {
+	toggleLegacyMode = () => {
+		this.setState({
+			legacyMode : !this.state.legacyMode
+		});
 	}
 
 	handleInput = (event) => {
@@ -79,7 +100,8 @@ class App extends Component {
 
 		return (
 			<div>
-				<span onClick={this.toggleMode} className="tab">Toggle Gen/Read</span>
+				<span onClick={this.toggleInputMode} className="tab">Toggle Generate/Read</span>
+				<span onClick={this.toggleLegacyMode} className="tab">Toggle Legacy Mode</span>
 				{this.state.inputMode ? (
 					<div>
 						<input
@@ -92,10 +114,25 @@ class App extends Component {
 							value="Generate QR Code"
 							onClick={this.generateCode}
 						/>
-						{/* Display the saved qr-code image */}
-						<div className="qr-container">
-							<InlineSVG src={this.state.svg} element="div" className="svg" />
-						</div>
+						<input
+							type="button"
+							value="Generate Branded QR Code"
+							onClick={this.generateBrandedCode}
+						/>
+
+						{/* Display the saved qr-code */}
+						{this.state.svg ? (
+							<div className="qr-container">
+								<InlineSVG src={this.state.svg} element="div" className="svg" />
+							</div>
+						) : false}
+
+						{this.state.img ? (
+							<div className="qr-container">
+								<img src={`/api${this.state.img}`} />
+							</div>
+						) : false}
+
 					</div>
 				) : (
 					<div>
@@ -112,7 +149,7 @@ class App extends Component {
 								legacyMode={this.state.legacyMode}
 							/>
 						</div>
-						<p>{this.state.result}</p>
+						<p className="result">{this.state.result}</p>
 
 						{this.state.legacyMode ? (
 							<div>
@@ -133,7 +170,5 @@ class App extends Component {
 		);
 	}
 }
-
-//<div style="top: 0px; left: 0px; z-index: 1; box-sizing: border-box; border: 50px solid rgba(0, 0, 0, 0.3); box-shadow: rgba(255, 0, 0, 0.5) 0px 0px 0px 5px inset; position: absolute; width: 100%; height: 100%;"></div>
 
 export default App;
